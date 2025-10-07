@@ -1,0 +1,9 @@
+# Archivo de credenciales
+.env
+
+# Entorno virtual de Python
+.venv/
+
+# Archivos de caché de Python y PyCharm
+__pycache__/
+.idea/
