@@ -28,4 +28,27 @@ class UserModel:
             if conn.is_connected():
                 conn.close()
 
+    def validate_login(self, username, password):
+        conn = DBConnector.get_connection()
+        if not conn:
+            messagebox.showerror("Error de conexión", "No se pudo conectar a la base de datos.")
+            return None
 
+        try:
+            cursor = conn.cursor()
+            query = "SELECT id, name, lastname FROM users WHERE username = %s AND password = %s"
+            cursor.execute(query, (username, password))
+            user_data = cursor.fetchone()
+            if user_data:
+                return user_data
+            else:
+                return None
+
+        except Error as e:
+            print("Error al validar login:", e)
+            messagebox.showerror("Error de base de datos", "Ocurrió un error al intentar iniciar sesión.")
+            return None
+
+        finally:
+            if conn and conn.is_connected():
+                conn.close()

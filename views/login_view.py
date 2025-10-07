@@ -30,7 +30,9 @@ class LoginView(tk.Tk):
 
 
     def login_button_clicked(self):
-            print("Iniciar sesion")
+        username = self.username_entry.get().strip()
+        password = self.username_password_entry.get().strip()
+        self.user_controller.handle_login(username, password)
 
     def register_button_clicked(self):
         self.user_controller.show_register_window ()
