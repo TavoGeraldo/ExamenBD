@@ -1,9 +1,18 @@
 # Archivo de credenciales
 .env
 
+# Archivos y carpetas de PyInstaller
+/dist
+/build
+*.spec
+
 # Entorno virtual de Python
 .venv/
+venv/
 
-# Archivos de caché de Python y PyCharm
-__pycache__/
+# Carpetas del IDE
 .idea/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
