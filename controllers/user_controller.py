@@ -1,6 +1,10 @@
 from views.login_view import LoginView
 from views.register_view import RegisterView
 from views.main_view import MainView
+from views.create_account_view import CreateAccountView
+from models.account_model import AccountModel
+from views.transfer_money_view import TransferMoneyView
+
 
 
 from tkinter import messagebox
@@ -9,6 +13,7 @@ class UserController:
     def __init__(self, user_model):
 
         self.user_model = user_model
+        self.account_model = AccountModel()
         self.login_view = None
         self.register_view = None
 
@@ -60,6 +65,39 @@ class UserController:
         if self.main_view:
             self.main_view.destroy()
             self.main_view = None
+
         if self.login_view:
             self.login_view.deiconify()
+
+    def show_create_account_view(self, user_id):
+        CreateAccountView(self.main_view, self, user_id)
+
+    def handle_create_account(self, user_id, initial_balance, window):
+
+        success, message, new_account_number = self.account_model.create_account(user_id, initial_balance)
+
+        if success:
+            full_message = f"{message}\n\nSu nuevo número de cuenta es:\n{new_account_number}"
+            messagebox.showinfo("Éxito", full_message, parent=window)
+            window.destroy()
+        else:
+            messagebox.showerror("Error", message, parent=window)
+
+    def get_accounts_for_view(self, user_id):
+        return self.account_model.get_user_accounts(user_id)
+
+    def show_transfer_money_view(self, user_id):
+        return TransferMoneyView(self.main_view, self, user_id)
+
+    def handle_transfer(self, source_id, dest_num, amount, note, window):
+        success, message = self.account_model.transfer_money(source_id, dest_num, amount, note)
+        if success:
+            messagebox.showinfo("Éxito", message, parent=window)
+            window.destroy()
+        else:
+            messagebox.showerror("Error", message, parent=window)
+
+
+
+
 

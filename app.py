@@ -1,6 +1,5 @@
-from controllers.models.user_models import UserModel
+from models.user_models import UserModel
 from controllers.user_controller import UserController
-from views.login_view import LoginView
 
 if __name__ == "__main__":
     user_model = UserModel()
